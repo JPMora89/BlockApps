@@ -8,7 +8,7 @@ CREATE TABLE subsidiaries (
     subsidiary_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     budget DECIMAL NOT NULL,
-    deleted BOOLEAN DEFAULT FALSE -- New column for soft deletion
+    deleted BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE transactions (

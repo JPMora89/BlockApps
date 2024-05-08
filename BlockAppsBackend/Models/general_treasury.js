@@ -1,14 +1,15 @@
-const db = require('../db'); // Import your database connection
+const db = require("../db");
 
 class GeneralTreasury {
   // Method to create a new general treasury record
   static async create(groupcoinPool, exchangeRate) {
-    const queryString = 'INSERT INTO general_treasury (groupcoin_pool, exchange_rate) VALUES ($1, $2) RETURNING *';
+    const queryString =
+      "INSERT INTO general_treasury (groupcoin_pool, exchange_rate) VALUES ($1, $2) RETURNING *";
     const values = [groupcoinPool, exchangeRate];
 
     try {
       const { rows } = await db.query(queryString, values);
-      return rows[0]; // Return the newly created general treasury record
+      return rows[0];
     } catch (error) {
       throw error;
     }
@@ -16,39 +17,41 @@ class GeneralTreasury {
 
   // Method to retrieve a general treasury record by ID
   static async findById(id) {
-    const queryString = 'SELECT * FROM general_treasury WHERE treasury_id = $1';
+    const queryString = "SELECT * FROM general_treasury WHERE treasury_id = $1";
     const values = [id];
 
     try {
       const { rows } = await db.query(queryString, values);
-      return rows[0]; // Return the general treasury record with the specified ID
+      return rows[0];
     } catch (error) {
       throw error;
     }
   }
 
   static async getLastExchangeRate() {
-    const queryString = 'SELECT exchange_rate FROM general_treasury ORDER BY treasury_id DESC LIMIT 1';
+    const queryString =
+      "SELECT exchange_rate FROM general_treasury ORDER BY treasury_id DESC LIMIT 1";
 
     try {
       const { rows } = await db.query(queryString);
       if (rows.length > 0) {
-        return rows[0].exchange_rate; // Return the exchange rate of the most recent record
+        return rows[0].exchange_rate;
       }
-      return null; // Return null if no records exist
+      return null;
     } catch (error) {
       throw error;
     }
   }
   static async getLastGroupCoinPool() {
-    const queryString = 'SELECT groupcoin_pool FROM general_treasury ORDER BY treasury_id DESC LIMIT 1';
+    const queryString =
+      "SELECT groupcoin_pool FROM general_treasury ORDER BY treasury_id DESC LIMIT 1";
 
     try {
       const { rows } = await db.query(queryString);
       if (rows.length > 0) {
-        return rows[0].groupcoin_pool; // Return the exchange rate of the most recent record
+        return rows[0].groupcoin_pool;
       }
-      return null; // Return null if no records exist
+      return null;
     } catch (error) {
       throw error;
     }
@@ -72,19 +75,16 @@ class GeneralTreasury {
 
   // Method to delete a general treasury record by ID
   static async delete(id) {
-    const queryString = 'DELETE FROM general_treasury WHERE treasury_id = $1';
+    const queryString = "DELETE FROM general_treasury WHERE treasury_id = $1";
     const values = [id];
 
     try {
       await db.query(queryString, values);
-      return true; // Return true if deletion is successful
+      return true;
     } catch (error) {
       throw error;
     }
   }
-
-  // Add more methods as needed...
-
 }
 
 module.exports = GeneralTreasury;

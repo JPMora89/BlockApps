@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const REACT_APP_BASE_URL = ""
+const REACT_APP_BASE_URL = "";
 const BASE_URL = REACT_APP_BASE_URL || "http://localhost:3001";
 
 class BlockAppsAPI {
-
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
 
@@ -20,10 +19,12 @@ class BlockAppsAPI {
     }
   }
 
-
   static async createGroupcoinPool(groupcoinPoolData) {
     try {
-      const response = await axios.post(`${BASE_URL}/generaltreasury`, groupcoinPoolData);
+      const response = await axios.post(
+        `${BASE_URL}/generaltreasury`,
+        groupcoinPoolData
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -31,52 +32,39 @@ class BlockAppsAPI {
     }
   }
 
-//   static async updateExchangeRate(exchangeRateData) {
-//     try {
-//       const response = await axios.put(`${BASE_URL}/generaltreasury`, exchangeRateData);
-//       return response.data;
-//     } catch (error) {
-//       console.error("API Error:", error.response);
-//       throw error.response.data.error.message;
-//     }
-//   }
-static async updateExchangeRate(exchangeRateData) {
+  static async updateExchangeRate(exchangeRateData) {
     try {
-      const response = await axios.put(`${BASE_URL}/generaltreasury`, exchangeRateData);
+      const response = await axios.put(
+        `${BASE_URL}/generaltreasury`,
+        exchangeRateData
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
       throw error.response.data.error.message;
     }
   }
-  
-  
 
   static async distributeGroupcoins(distributionData) {
     try {
-      const response = await axios.post(`${BASE_URL}/generaltreasury/distribute`, distributionData);
+      const response = await axios.post(
+        `${BASE_URL}/generaltreasury/distribute`,
+        distributionData
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
       throw error.response.data.error.message;
     }
   }
-
-  // static async getAllActiveSubsidiaries() {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/subsidiaries`);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("API Error:", error.response);
-  //     throw error.response.data.error.message;
-  //   }
-  // }
-  
 
   static async getAllSubsidiaries() {
     try {
       const response = await axios.get(`${BASE_URL}/subsidiaries`);
-      return response.data;
+      const filteredSubsidiaries = response.data.filter(
+        (subsidiary) => !subsidiary.deleted
+      );
+      return filteredSubsidiaries;
     } catch (error) {
       console.error("API Error:", error.response);
       throw error.response.data.error.message;
@@ -85,7 +73,10 @@ static async updateExchangeRate(exchangeRateData) {
 
   static async createSubsidiary(subsidiaryData) {
     try {
-      const response = await axios.post(`${BASE_URL}/subsidiaries`, subsidiaryData);
+      const response = await axios.post(
+        `${BASE_URL}/subsidiaries`,
+        subsidiaryData
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -94,29 +85,35 @@ static async updateExchangeRate(exchangeRateData) {
   }
   static async deleteSubsidiary(subsidiaryId) {
     try {
-      const response = await axios.delete(`${BASE_URL}/subsidiaries/${subsidiaryId}`);
+      const response = await axios.delete(
+        `${BASE_URL}/subsidiaries/${subsidiaryId}`
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
       throw error.response.data.error.message;
     }
   }
-  
-  static async updateSubsidiary(subsidiaryId, updatedData) {
+
+  static async updateSubsidiary(updatedData) {
     try {
-      const response = await axios.put(`${BASE_URL}/subsidiaries/${subsidiaryId}`, updatedData);
+      const response = await axios.put(
+        `${BASE_URL}/subsidiaries/`,
+        updatedData
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
       throw error.response.data.error.message;
     }
   }
-
-
 
   static async requestGroupcoins(subsidiaryId, requestAmount) {
     try {
-      const response = await axios.post(`${BASE_URL}/subsidiaries/api/subsidiaries/${subsidiaryId}/request-groupcoins`, { amount: requestAmount });
+      const response = await axios.post(
+        `${BASE_URL}/subsidiaries/api/subsidiaries/${subsidiaryId}/request-groupcoins`,
+        { amount: requestAmount }
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -126,7 +123,11 @@ static async updateExchangeRate(exchangeRateData) {
 
   static async createTransaction(senderId, receiverId, amount) {
     try {
-      const response = await axios.post(`${BASE_URL}/transactions`, { senderId, receiverId, amount });
+      const response = await axios.post(`${BASE_URL}/transactions`, {
+        senderId,
+        receiverId,
+        amount,
+      });
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -146,8 +147,9 @@ static async updateExchangeRate(exchangeRateData) {
 
   static async getLastExchangeRate() {
     try {
-      const response = await axios.get(`${BASE_URL}/generaltreasury/last-exchange-rate`);
-      console.log(response)
+      const response = await axios.get(
+        `${BASE_URL}/generaltreasury/last-exchange-rate`
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -156,8 +158,9 @@ static async updateExchangeRate(exchangeRateData) {
   }
   static async getTotalGroupCoin() {
     try {
-      const response = await axios.get(`${BASE_URL}/generaltreasury/getTotalPool`);
-      console.log(response)
+      const response = await axios.get(
+        `${BASE_URL}/generaltreasury/getTotalPool`
+      );
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);

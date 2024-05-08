@@ -1,12 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Transaction = require('../Models/transactions');
+const Transaction = require("../Models/transactions");
 
 // Route to create a new transaction
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { senderId, receiverId, amount } = req.body;
-    const newTransaction = await Transaction.create(senderId, receiverId, amount);
+    const newTransaction = await Transaction.create(
+      senderId,
+      receiverId,
+      amount
+    );
     res.status(201).json(newTransaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -14,7 +18,7 @@ router.post('/', async (req, res) => {
 });
 
 // Route to get all transactions
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const transactions = await Transaction.getAll();
     res.json(transactions);
@@ -24,12 +28,12 @@ router.get('/', async (req, res) => {
 });
 
 // Route to get a transaction by its ID
-router.get('/:transactionId', async (req, res) => {
+router.get("/:transactionId", async (req, res) => {
   try {
     const transactionId = req.params.transactionId;
     const transaction = await Transaction.getById(transactionId);
     if (!transaction) {
-      return res.status(404).json({ error: 'Transaction not found' });
+      return res.status(404).json({ error: "Transaction not found" });
     }
     res.json(transaction);
   } catch (error) {
@@ -38,13 +42,18 @@ router.get('/:transactionId', async (req, res) => {
 });
 
 // Route to update a transaction by its ID
-router.put('/:transactionId', async (req, res) => {
+router.put("/:transactionId", async (req, res) => {
   try {
     const transactionId = req.params.transactionId;
     const { senderId, receiverId, amount } = req.body;
-    const updatedTransaction = await Transaction.update(transactionId, senderId, receiverId, amount);
+    const updatedTransaction = await Transaction.update(
+      transactionId,
+      senderId,
+      receiverId,
+      amount
+    );
     if (!updatedTransaction) {
-      return res.status(404).json({ error: 'Transaction not found' });
+      return res.status(404).json({ error: "Transaction not found" });
     }
     res.json(updatedTransaction);
   } catch (error) {
@@ -53,14 +62,14 @@ router.put('/:transactionId', async (req, res) => {
 });
 
 // Route to delete a transaction by its ID
-router.delete('/:transactionId', async (req, res) => {
+router.delete("/:transactionId", async (req, res) => {
   try {
     const transactionId = req.params.transactionId;
     const deletedTransaction = await Transaction.delete(transactionId);
     if (!deletedTransaction) {
-      return res.status(404).json({ error: 'Transaction not found' });
+      return res.status(404).json({ error: "Transaction not found" });
     }
-    res.json({ message: 'Transaction deleted successfully' });
+    res.json({ message: "Transaction deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

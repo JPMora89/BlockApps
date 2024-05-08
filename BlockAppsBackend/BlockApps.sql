@@ -5,10 +5,13 @@ CREATE DATABASE blockapps;
 
 \i BlockApps-schema.sql
 
+INSERT INTO general_treasury (groupcoin_pool, exchange_rate) VALUES (1000, 1);
+
+-- A test database
 
 
-DROP DATABASE blockapps_test;
-CREATE DATABASE blockapps_test;
-\connect blockapps_test
+-- DROP DATABASE blockapps_test;
+-- CREATE DATABASE blockapps_test;
+-- \connect blockapps_test
 
-\i BlockApps-schema.sql
+-- \i BlockApps-schema.sql

@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Balance = require('../Models/balances');
+const Balance = require("../Models/balances");
 
 // Route to create a new balance
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { userId, balance } = req.body;
     const newBalance = await Balance.create(userId, balance);
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 });
 
 // Route to get all balances
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const balances = await Balance.getAll();
     res.json(balances);
@@ -24,12 +24,12 @@ router.get('/', async (req, res) => {
 });
 
 // Route to get a balance by user ID
-router.get('/:userId', async (req, res) => {
+router.get("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const balance = await Balance.getByUserId(userId);
     if (!balance) {
-      return res.status(404).json({ error: 'Balance not found' });
+      return res.status(404).json({ error: "Balance not found" });
     }
     res.json(balance);
   } catch (error) {
@@ -38,7 +38,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Route to update a balance by user ID
-router.put('/:userId', async (req, res) => {
+router.put("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const newBalance = req.body.balance;
@@ -50,14 +50,14 @@ router.put('/:userId', async (req, res) => {
 });
 
 // Route to delete a balance by user ID
-router.delete('/:userId', async (req, res) => {
+router.delete("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const deletedBalance = await Balance.delete(userId);
     if (!deletedBalance) {
-      return res.status(404).json({ error: 'Balance not found' });
+      return res.status(404).json({ error: "Balance not found" });
     }
-    res.json({ message: 'Balance deleted successfully' });
+    res.json({ message: "Balance deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

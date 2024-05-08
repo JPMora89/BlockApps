@@ -1,25 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Subsidiary = require('../Models/subsidiaries');
-
+const Subsidiary = require("../Models/subsidiaries");
 
 // Route to delete a subsidiary by its ID
-router.delete('/:subsidiaryId', async (req, res) => {
+router.delete("/:subsidiaryId", async (req, res) => {
   try {
     const subsidiaryId = req.params.subsidiaryId;
     const deletedSubsidiary = await Subsidiary.softDelete(subsidiaryId);
     if (!deletedSubsidiary) {
-      return res.status(404).json({ error: 'Subsidiary not found' });
+      return res.status(404).json({ error: "Subsidiary not found" });
     }
-    res.json({ message: 'Subsidiary deleted successfully' });
+    res.json({ message: "Subsidiary deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-
 // Route to create a new subsidiary
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { name, budget } = req.body;
     const newSubsidiary = await Subsidiary.create(name, budget);
@@ -30,7 +28,7 @@ router.post('/', async (req, res) => {
 });
 
 // // Route to get all subsidiaries
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const subsidiaries = await Subsidiary.getAll();
     res.json(subsidiaries);
@@ -39,24 +37,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Route to get all active subsidiaries
-// router.get('/', async (req, res) => {
-//   try {
-//     const activeSubsidiaries = await Subsidiary.getAllActive();
-//     res.json(activeSubsidiaries);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-
 // Route to get a subsidiary by its ID
-router.get('/:subsidiaryId', async (req, res) => {
+router.get("/:subsidiaryId", async (req, res) => {
   try {
     const subsidiaryId = req.params.subsidiaryId;
     const subsidiary = await Subsidiary.getById(subsidiaryId);
     if (!subsidiary) {
-      return res.status(404).json({ error: 'Subsidiary not found' });
+      return res.status(404).json({ error: "Subsidiary not found" });
     }
     res.json(subsidiary);
   } catch (error) {
@@ -65,20 +52,21 @@ router.get('/:subsidiaryId', async (req, res) => {
 });
 
 // Route to update a subsidiary by its ID
-router.put('/', async (req, res) => {
+router.put("/", async (req, res) => {
   try {
-    const subsidiaryId = req.params.subsidiaryId;
-    const { name, budget } = req.body;
-    const updatedSubsidiary = await Subsidiary.update(subsidiaryId, name, budget);
+    const { subsidiaryId, name, budget } = req.body;
+    const updatedSubsidiary = await Subsidiary.update(
+      subsidiaryId,
+      name,
+      budget
+    );
     if (!updatedSubsidiary) {
-      return res.status(404).json({ error: 'Subsidiary not found' });
+      return res.status(404).json({ error: "Subsidiary not found" });
     }
     res.json(updatedSubsidiary);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
-
 
 module.exports = router;
